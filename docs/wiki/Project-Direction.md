@@ -5,7 +5,7 @@ Last reviewed: 2 November 2026
 ## AI-use disclaimer
 
 This document was generated and structured with the assistance of artificial intelligence. It summarises ideas discussed in supervisor meetings and other project discussions and thoughts I had. AI was used to organise and present those ideas in a structured form, not to replace the underlying project decisions or evidence. Its value is primarily practical: it provides a single place to keep track of possible directions, questions,
-alternatives, and decisions. As new ideas occur, they may be added with AI assistance so that they are not forgotten and can be reviewed in an organised way. The meeting minutes, technical experiments, research sources, and confirmed decisions remain the authoritative evidence for the project.
+alternatives. As new ideas occur, they may be added with AI assistance so that they are not forgotten and can be reviewed in an organised way. The meeting minutes, technical experiments, research sources, and confirmed decisions remain the authoritative evidence for the project.
 
 ## Purpose
 
@@ -13,14 +13,12 @@ This document records the direction of the project while it is still being
 explored. It separates:
 
 - ideas that were considered
-- decisions that have been made
 - questions that still need evidence
 - possible dissertation conclusions
 - work that is deliberately outside the current minimum viable product.
 
-It is a decision record, not a promise that every possible extension will be
-implemented. The supervisor meeting minutes remain the chronological record of
-what was discussed. This document consolidates those discussions into a
+It is not a promise that every possible extension will be
+implemented. The supervisor meeting minutes remain the chronological record of what was discussed. This document consolidates those discussions into a
 roadmap that can be updated as technical evidence is collected.
 
 ## Starting point: Flutter Hot Reload
