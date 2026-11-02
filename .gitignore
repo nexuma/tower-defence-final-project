@@ -1,0 +1,61 @@
+# Generated build output
+/build/
+**/build/
+!build/
+!build/**/*.pdf
+!meetings/build/
+!meetings/build/**/*.pdf
+
+# LaTeX auxiliary files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.synctex.gz
+*.toc
+*.xdv
+
+# Flutter and Dart generated files
+**/.dart_tool/
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.packages
+**/.pub-cache/
+**/.pub/
+**/coverage/
+**/ios/Flutter/.last_build_id
+**/ios/Flutter/ephemeral/
+**/macos/Flutter/ephemeral/
+**/android/.gradle/
+**/android/local.properties
+**/android/app/debug/
+**/android/app/profile/
+**/android/app/release/
+**/app.*.symbols
+**/app.*.map.json
+**/.widget_preview/
+
+# IDE and editor files
+**/.idea/
+*.iml
+*.ipr
+*.iws
+.history/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# Operating-system and temporary files
+.DS_Store
+Thumbs.db
+*.class
+*.pyc
+*.swp
+*.tmp
