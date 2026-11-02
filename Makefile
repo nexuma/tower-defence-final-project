@@ -10,7 +10,7 @@ PDFS := $(patsubst %.tex,$(BUILD_DIR)/%.pdf,$(LATEX_SOURCES))
 WIKI_MARKDOWN := $(WIKI_DIR)/Functional-Requirements.md \
 	$(patsubst meetings/meeting_%_minutes.tex,$(WIKI_DIR)/Meeting-%.md,$(wildcard meetings/meeting_[0-9][0-9]_minutes.tex))
 
-.PHONY: all pdfs markdown wiki publish-wiki clean
+.PHONY: all pdfs markdown wiki publish-wiki publish-wiki-files clean
 
 all: pdfs markdown
 
@@ -20,8 +20,11 @@ markdown: $(WIKI_MARKDOWN)
 
 wiki: markdown
 
-publish-wiki: wiki
-	@test -n "$(WIKI_REPO)" || (echo "Usage: make publish-wiki WIKI_REPO=/path/to/wiki-clone"; exit 1)
+publish-wiki:
+	./scripts/publish-wiki.sh "$(COMMIT_MESSAGE)"
+
+publish-wiki-files: wiki
+	@test -n "$(WIKI_REPO)" || (echo "Usage: make publish-wiki-files WIKI_REPO=/path/to/wiki-clone"; exit 1)
 	cp $(WIKI_DIR)/Functional-Requirements.md $(WIKI_DIR)/Meeting-*.md \
 		$(WIKI_DIR)/Home.md $(WIKI_REPO)/
 
