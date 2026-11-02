@@ -8,7 +8,11 @@ LATEX_SOURCES := $(wildcard docs/requirements/*.tex) \
 PDFS := $(patsubst %.tex,$(BUILD_DIR)/%.pdf,$(LATEX_SOURCES))
 
 WIKI_MARKDOWN := $(WIKI_DIR)/Functional-Requirements.md \
-	$(patsubst meetings/meeting_%_minutes.tex,$(WIKI_DIR)/Meeting-%.md,$(wildcard meetings/meeting_[0-9][0-9]_minutes.tex))
+	$(patsubst meetings/meeting_%_minutes.tex,$(WIKI_DIR)/Meeting-%.md,$(wildcard meetings/meeting_[0-9][0-9]_minutes.tex)) \
+	$(WIKI_DIR)/Project-Plan.md \
+	$(WIKI_DIR)/Time-Log.md \
+	$(WIKI_DIR)/Project-Direction.md \
+	$(WIKI_DIR)/Decision-Log.md
 
 .PHONY: all pdfs markdown wiki publish-wiki publish-wiki-files clean
 
@@ -25,8 +29,7 @@ publish-wiki:
 
 publish-wiki-files: wiki
 	@test -n "$(WIKI_REPO)" || (echo "Usage: make publish-wiki-files WIKI_REPO=/path/to/wiki-clone"; exit 1)
-	cp $(WIKI_DIR)/Functional-Requirements.md $(WIKI_DIR)/Meeting-*.md \
-		$(WIKI_DIR)/Home.md $(WIKI_REPO)/
+	cp $(WIKI_MARKDOWN) $(WIKI_DIR)/Home.md "$(WIKI_REPO)/"
 
 $(BUILD_DIR)/%.pdf: %.tex
 	mkdir -p $(@D)
@@ -40,6 +43,26 @@ $(WIKI_DIR)/Functional-Requirements.md: docs/requirements/functional_requirement
 $(WIKI_DIR)/Meeting-%.md: meetings/meeting_%_minutes.tex
 	mkdir -p $(@D)
 	pandoc -f latex -t gfm --wrap=none $< -o $@
+
+$(WIKI_DIR)/Project-Plan.md: plan.md
+	mkdir -p $(@D)
+	sed \
+		-e 's|(docs/roadmap/project-direction\.md)|(Project-Direction)|g' \
+		-e 's|(docs/roadmap/decision-log\.md)|(Decision-Log)|g' \
+		-e 's|(timelog\.md)|(Time-Log)|g' \
+		$< > $@
+
+$(WIKI_DIR)/Time-Log.md: timelog.md
+	mkdir -p $(@D)
+	cp $< $@
+
+$(WIKI_DIR)/Project-Direction.md: docs/roadmap/project-direction.md
+	mkdir -p $(@D)
+	cp $< $@
+
+$(WIKI_DIR)/Decision-Log.md: docs/roadmap/decision-log.md
+	mkdir -p $(@D)
+	cp $< $@
 
 clean:
 	rm -rf $(BUILD_DIR)

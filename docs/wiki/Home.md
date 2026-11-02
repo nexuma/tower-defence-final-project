@@ -1,9 +1,14 @@
 # Tower Defence Project Wiki
 
-This wiki contains the project's requirements and supervisor meeting minutes.
+This wiki contains the project's plan, time log, requirements, roadmap,
+decisions, and supervisor meeting minutes.
 
 ## Documentation
 
+- [Project Plan](Project-Plan)
+- [Time Log](Time-Log)
+- [Project Direction and Exploration Roadmap](Project-Direction)
+- [Project Decision Log](Decision-Log)
 - [Functional Requirements](Functional-Requirements)
 - [Meeting 1](Meeting-01)
 - [Meeting 2](Meeting-02)
@@ -11,8 +16,8 @@ This wiki contains the project's requirements and supervisor meeting minutes.
 - [Meeting 4](Meeting-04)
 - [Meeting 5](Meeting-05)
 
-The pages are generated from the LaTeX source files in the main repository.
-After changing the source documents, publish the updated wiki with:
+The pages are generated or copied from the source documents in the main
+repository. After changing the source documents, publish the updated wiki with:
 
 ```bash
 make publish-wiki

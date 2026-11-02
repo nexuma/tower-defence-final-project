@@ -34,7 +34,7 @@ if [[ -z "$COMMIT_MESSAGE" ]]; then
     exit 1
 fi
 
-git -C "$WIKI_REPO" add Home.md Functional-Requirements.md Meeting-*.md
+git -C "$WIKI_REPO" add -- '*.md'
 git -C "$WIKI_REPO" commit -m "$COMMIT_MESSAGE"
 git -C "$WIKI_REPO" push origin master
 
