@@ -1,0 +1,45 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlength{\emergencystretch}{3em}
+
+\title{\textbf{Supervisor Meeting Minutes}\\Meeting 3}
+\author{Present: Matthew Chalmers, Jonas Leipner}
+\date{Date: 13 October 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Achieved in Previous Week}
+
+\noindent\textit{Previous week: 6--13 October 2026}
+\begin{itemize}[leftmargin=*]
+    \item Re-evaluated the constraints affecting dynamic code loading in production.
+    \item Investigated the distinction between over-the-air patching and true runtime code loading.
+\end{itemize}
+
+\section{Issues Discussed \& Solutions Agreed}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Shorebird limitation:} Shorebird can deliver code patches over the air, but the application must restart. It does not load new code dynamically inside an active game session.
+    \item \textbf{True dynamic loading:} Runtime scripting through Lua or JavaScript, or the \texttt{dart\_eval} Dart bytecode interpreter, is required for code to execute dynamically during a session.
+    \item \textbf{\texttt{dart\_eval} architecture:} \texttt{dart\_eval} is sandboxed. An internal bridge is required to pass Flame game state into the sandbox, calculate values such as combat damage, and return validated results to Flame.
+    \item \textbf{Research scope:} The project should compare plugin architectures with runtime dynamic code loading approaches used in commercial games.
+\end{itemize}
+
+\section{Objectives for This Week}
+
+\noindent\textit{Upcoming week: 13--20 October 2026}
+\begin{itemize}[leftmargin=*]
+    \item Test communication between the Flame Engine and the \texttt{dart\_eval} sandbox.
+    \item Research memory optimisation and dynamic loading practices in commercial game development.
+\end{itemize}
+
+\section*{\small AI-use Disclaimer}
+\small The meeting content and source notes for these minutes are genuine. Artificial intelligence was used only to organise and summarise the notes into a more digestible format; it was not used to invent the meeting content.
+
+\end{document}

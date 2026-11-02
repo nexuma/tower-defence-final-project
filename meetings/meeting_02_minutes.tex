@@ -1,0 +1,47 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlength{\emergencystretch}{3em}
+
+\title{\textbf{Supervisor Meeting Minutes}\\Meeting 2}
+\author{Present: Matthew Chalmers, Jonas Leipner}
+\date{Date: 29 September 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Achieved in Previous Week}
+
+\noindent\textit{Previous week: 22--29 September 2026}
+\begin{itemize}[leftmargin=*]
+    \item Formulated the initial project concept and identified the first version of the game MVP.
+    \item Considered how dynamic updates and telemetry could support the game's research objectives.
+\end{itemize}
+
+\section{Issues Discussed \& Solutions Agreed}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Project concept:} The project will investigate a tower defence simulation game with dynamic tower and item upgrades, supported by telemetry feedback to analyse feature adoption.
+    \item \textbf{Technology stack:} Flame will provide the game loop, Deferred Components will support asset delivery, Shorebird will support Dart logic patches, and \texttt{dart:ffi} will provide native interoperability where required.
+    \item \textbf{MVP gameplay:} The initial game should support buying, selling, and placing towers, an enemy wave lifecycle, and gold rewards.
+    \item \textbf{Incubator mechanic:} An incubator building will merge two towers according to a genetic code specified in JSON.
+    \item \textbf{Evaluation data:} Telemetry logging and a leaderboard will be used to examine optimal tower combinations.
+    \item \textbf{Potential extensions:} Later work could explore telemetry-driven Shorebird patches, such as changing fire resistance, and dynamic tower certificates or encryption.
+\end{itemize}
+
+\section{Objectives for This Week}
+
+\noindent\textit{Upcoming week: 29 September--6 October 2026}
+\begin{itemize}[leftmargin=*]
+    \item Gather user feedback on the proposed game concepts.
+    \item Build a basic prototype using the Flame Engine.
+\end{itemize}
+
+\section*{\small AI-use Disclaimer}
+\small The meeting content and source notes for these minutes are genuine. Artificial intelligence was used only to organise and summarise the notes into a more digestible format; it was not used to invent the meeting content.
+
+\end{document}

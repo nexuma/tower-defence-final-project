@@ -1,0 +1,47 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlength{\emergencystretch}{3em}
+
+\title{\textbf{Supervisor Meeting Minutes}\\Meeting 4}
+\author{Present: Matthew Chalmers, Jonas Leipner}
+\date{Date: 20 October 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Achieved in Previous Week}
+
+\noindent\textit{Previous week: 13--20 October 2026}
+\begin{itemize}[leftmargin=*]
+    \item Defined the game parameters that could be modified dynamically and separated them from functionality that should remain native and static.
+    \item Considered how the dynamic execution model could be relevant beyond the game itself.
+\end{itemize}
+
+\section{Issues Discussed \& Solutions Agreed}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Dynamic parameters:} Candidate values include tower damage, range, cooldown, targeting, enemy health, armour and behaviour, wave composition, gold rewards, incubator rules, and temporary balancing events.
+    \item \textbf{Native parameters:} Flame rendering, lifecycle, input, collision detection, storage, permissions, and the validation bridge should remain native.
+    \item \textbf{Execution flow:} The Flame loop passes combat state to a \texttt{CombatState} bridge, which sends data to \texttt{dart\_eval}. The sandbox runs \texttt{calculateDamage()}, returns the result, and Flame validates and applies the damage.
+    \item \textbf{Industry benchmarks:} Relevant examples include the dynamic compiler used by the PS2 version of Crash Bandicoot, DLL hot reloading, binary patching, and scripting VMs in games such as Skyrim and Roblox.
+    \item \textbf{Broader relevance:} The project can be framed around dynamic loading in backend systems, plugin ecosystems, browser extensions, and recommender systems, rather than games alone.
+    \item \textbf{Recommendation concept:} Telemetry recommendations could dynamically load UI widgets or features that help players discover effective configurations.
+\end{itemize}
+
+\section{Objectives for This Week}
+
+\noindent\textit{Upcoming week: 20--27 October 2026}
+\begin{itemize}[leftmargin=*]
+    \item Conduct a background survey of dynamic loading use cases.
+    \item Design the initial game structure and telemetry recommendation framework.
+\end{itemize}
+
+\section*{\small AI-use Disclaimer}
+\small The meeting content and source notes for these minutes are genuine. Artificial intelligence was used only to organise and summarise the notes into a more digestible format; it was not used to invent the meeting content.
+
+\end{document}

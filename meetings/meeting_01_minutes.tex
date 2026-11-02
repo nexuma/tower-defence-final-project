@@ -1,0 +1,48 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlength{\emergencystretch}{3em}
+
+\title{\textbf{Supervisor Meeting Minutes}\\Meeting 1}
+\author{Present: Matthew Chalmers, Jonas Leipner}
+\date{Date: 29 September 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Achieved in Previous Week}
+
+\noindent\textit{Previous week: 22--29 September 2026}
+\begin{itemize}[leftmargin=*]
+    \item Investigated Flutter and Dart compilation modes, Hot Reload security, VM protocols, and equivalent dynamic capabilities in other languages and hardware.
+    \item Documented the technical actions, constraints, and justifications relevant to dynamic code execution in the proposed project.
+\end{itemize}
+
+\section{Issues Discussed \& Solutions Agreed}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Flutter Hot Reload and debugging:} Hot Reload injects updated source code into a running Dart VM in Debug mode without losing application state. It is limited to debug builds and cannot modify \texttt{main()} or native code.
+    \item \textbf{Production code updates:} Shorebird was explored as a tool for remotely patching Dart logic in release mode using production over-the-air updates.
+    \item \textbf{Deferred components:} Flutter's \texttt{deferred as} mechanism and Android Dynamic Feature Modules can split compiled binaries and reduce initial memory usage.
+    \item \textbf{Server-driven UI:} The \texttt{rfw} package can render declarative UI dynamically from binary \texttt{.rfw} or text \texttt{.rfwtxt} definitions sent by a server.
+    \item \textbf{Modular game architecture:} Flame was identified for the game loop, with modular asset loading and possible embedded scripting through \texttt{lua\_dardo} or \texttt{flutter\_js}.
+    \item \textbf{JIT and AOT constraints:} JIT is used in Debug mode and supports dynamic execution at a memory and performance cost. AOT is used in Release mode and produces statically compiled native code without the JIT compiler.
+    \item \textbf{Academic bypasses:} Potential approaches included retaining JIT in Debug or Profile mode with \texttt{vm\_service}, loading dynamic native libraries through \texttt{dart:ffi}, and forking the Flutter C++ engine to re-enable \texttt{Isolate.spawnUri()}.
+\end{itemize}
+
+\section{Objectives for This Week}
+
+\noindent\textit{Upcoming week: 29 September--6 October 2026}
+\begin{itemize}[leftmargin=*]
+    \item Interview users regarding potential game directions and use cases.
+    \item Explore the capabilities and constraints of the Flame Engine.
+\end{itemize}
+
+\section*{\small AI-use Disclaimer}
+\small The meeting content and source notes for these minutes are genuine. Artificial intelligence was used only to organise and summarise the notes into a more digestible format; it was not used to invent the meeting content.
+
+\end{document}
