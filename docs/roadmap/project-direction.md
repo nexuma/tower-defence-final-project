@@ -3,7 +3,8 @@
 Last reviewed: 2 November 2026
 
 ## AI-use disclaimer
-This document was generated and structured with the assistance of artificial intelligence. It summarises ideas discussed in supervisor meetings and other project discussions and thoughts I had. AI was used to organise, expand, and present those ideas in a structured form, not to replace the underlying project decisions or evidence. Its value is primarily practical: it provides a single place to keep track of possible directions, questions,
+
+This document was generated and structured with the assistance of artificial intelligence. It summarises ideas discussed in supervisor meetings and other project discussions and thoughts I had. AI was used to organise and present those ideas in a structured form, not to replace the underlying project decisions or evidence. Its value is primarily practical: it provides a single place to keep track of possible directions, questions,
 alternatives, and decisions. As new ideas occur, they may be added with AI assistance so that they are not forgotten and can be reviewed in an organised way. The meeting minutes, technical experiments, research sources, and confirmed decisions remain the authoritative evidence for the project.
 
 ## Purpose
