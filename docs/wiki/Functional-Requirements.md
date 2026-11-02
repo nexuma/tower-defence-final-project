@@ -26,6 +26,8 @@ For example, `FR-M2` means the second functional requirement assigned the Must H
 
 **User story FR-M1:** As a player, I want to select towers and place a maximum of five on the grid so that I can defend my home base from incoming monsters.
 
+**GitHub issue:** [Issue \#1](https://github.com/nexuma/tower-defence-final-project/issues/1)
+
 **Acceptance criteria**
 
 - Given that fewer than five towers have been placed, when the player selects a valid tower position, then the selected tower is placed on the grid.
@@ -39,6 +41,8 @@ For example, `FR-M2` means the second functional requirement assigned the Must H
 ## System Architecture Persona
 
 **User story FR-M2:** As the system architecture, I want to extract the current combat state from Flame and pass it to a `dart_eval` sandbox so that game logic can be executed dynamically without needing an app restart or a new AOT compilation.
+
+**GitHub issue:** [Issue \#2](https://github.com/nexuma/tower-defence-final-project/issues/2)
 
 **Acceptance criteria**
 
@@ -56,6 +60,8 @@ For example, `FR-M2` means the second functional requirement assigned the Must H
 
 **User story FR-S1:** As a player, I want enemies to be worth different point values so that I can track my score and measure my success as the waves get progressively harder.
 
+**GitHub issue:** [Issue \#3](https://github.com/nexuma/tower-defence-final-project/issues/3)
+
 **Acceptance criteria**
 
 - Given two enemy types with different configured values, when the player defeats them, then the score increases by the corresponding value for each enemy.
@@ -69,6 +75,8 @@ For example, `FR-M2` means the second functional requirement assigned the Must H
 ## Researcher Persona
 
 **User story FR-S2:** As a researcher, I want to capture telemetry data on which towers are placed most frequently so that I can analyse optimal player strategies and eventually power a dynamic recommender system.
+
+**GitHub issue:** [Issue \#4](https://github.com/nexuma/tower-defence-final-project/issues/4)
 
 **Acceptance criteria**
 
@@ -86,6 +94,8 @@ For example, `FR-M2` means the second functional requirement assigned the Must H
 
 **User story FR-C1:** As a player, I want to merge two towers in the incubator to create a unique tower so that I can discover new defences and achieve a higher score.
 
+**GitHub issue:** [Issue \#5](https://github.com/nexuma/tower-defence-final-project/issues/5)
+
 **Acceptance criteria**
 
 - Given two compatible towers in the incubator, when the player confirms the merge, then the two input towers are removed and the defined unique tower is created.
@@ -99,6 +109,8 @@ For example, `FR-M2` means the second functional requirement assigned the Must H
 ## System Architecture Persona
 
 **User story FR-C2:** As the system architecture, I want to log player choices and victory metrics locally so that the data can later be formatted and fed into a dynamic recommender system.
+
+**GitHub issue:** [Issue \#6](https://github.com/nexuma/tower-defence-final-project/issues/6)
 
 **Acceptance criteria**
 
