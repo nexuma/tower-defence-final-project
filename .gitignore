@@ -46,11 +46,7 @@
 *.ipr
 *.iws
 .history/
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
+.vscode/
 
 # Operating-system and temporary files
 .DS_Store
