@@ -1,0 +1,82 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlength{\emergencystretch}{3em}
+
+\title{\textbf{Supervisor Meeting Minutes}\\Meeting 6}
+\author{Present: Matthew Chalmers, Jonas Leipner}
+\date{Date: 3 November 2026}
+
+\begin{document}
+
+\maketitle
+
+\section{Achieved in Previous Week}
+
+\noindent\textit{Previous week: 27 October--3 November 2026}
+\begin{itemize}[leftmargin=*]
+    \item Updated the supervisor on the current state of the project repository,
+    its documentation, and its planning artefacts.
+    \item Continued refining the user stories and the possible direction of the
+    project.
+\end{itemize}
+
+\section{Issues Discussed \& Solutions Agreed}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Repository and submission:} The repository structure and
+    current project work were discussed. The final submission is expected to
+    include a source-code ZIP, with the exact submission and repository-access
+    requirements to be confirmed from the module guidance.
+    \item \textbf{User stories:} The current user stories were reviewed as the
+    basis for the game, research direction, and future implementation work.
+    \item \textbf{Social aspect:} The previously implied multi-user and social
+    dimension of the project was discussed explicitly. This includes learning
+    from other users' towers, modules, configurations, and outcomes rather
+    than necessarily making the game a direct player-versus-player game.
+    Continuing with this social aspect was formally approved as part of the
+    project direction.
+    \item \textbf{Sources of shared content:} The discussion identified open
+    questions about where modules or towers originate and how users can
+    discover which options may be useful for them. Possible future mechanisms
+    include shared modules, comparisons of successful configurations, and
+    recommendations.
+    \item \textbf{Sandbox communication frequency:} The next technical
+    investigation is to determine when the \texttt{dart\_eval} sandbox should
+    receive information from the game. Options include once per game loop,
+    once whenever an enemy is present, once per relevant combat event, or only
+    when an enemy enters a tower's range.
+    \item \textbf{Sandbox input scope:} The experiment should compare passing
+    information about one enemy, all enemies within a tower's range, or all
+    enemies currently in the game. The choice should balance the information
+    required by the dynamic logic against performance and implementation
+    feasibility.
+    \item \textbf{Evaluation value:} Measuring the communication frequency and
+    input scope can provide evidence for the dissertation, including a
+    comparison of the technical cost and practicality of alternative designs.
+\end{itemize}
+
+\section{Objectives for This Week}
+
+\noindent\textit{Upcoming week: 3--10 November 2026}
+\begin{itemize}[leftmargin=*]
+    \item Create an initial experiment for passing combat information from the
+    Flame game to the \texttt{dart\_eval} sandbox.
+    \item Compare candidate invocation frequencies, including per-game-loop,
+    per-event, and range-triggered execution.
+    \item Compare candidate input scopes, including individual enemies,
+    enemies within range, and all active enemies.
+    \item Record measurable observations about feasibility, execution cost,
+    and the information available to the dynamic damage calculation.
+\end{itemize}
+
+\section*{\small AI-use Disclaimer}
+\small The meeting content and source notes for these minutes are genuine.
+Artificial intelligence was used only to organise and summarise the notes
+and transcript into a more digestible format; it was not used to invent the
+meeting content or decisions.
+
+\end{document}

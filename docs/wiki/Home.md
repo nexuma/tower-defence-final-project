@@ -15,6 +15,7 @@ decisions, and supervisor meeting minutes.
 - [Meeting 3](Meeting-03)
 - [Meeting 4](Meeting-04)
 - [Meeting 5](Meeting-05)
+- [Meeting 6](Meeting-06)
 
 The pages are generated or copied from the source documents in the main
 repository. After changing the source documents, publish the updated wiki with:
