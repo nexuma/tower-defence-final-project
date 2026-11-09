@@ -63,12 +63,9 @@ retired and its code is not reused; only its findings carry forward.
   the frame rate, and should sandbox calls have a time budget or run off the
   main thread?
 - **Sandbox call frequency** (Meeting 6): every frame, every attack cooldown,
-  or once per batch? Should it receive all enemies or only those in range? An
-  early benchmark on the retired prototype found about 3.4 ms per `eval()`
-  call compared with about 4.5 µs per call on a compiled `Runtime` that is
-  reused, which suggests compiling modules once. These numbers are only
-  indicative: the benchmarks will be repeated on the new `CombatLogic`
-  implementation, including batched calls with several enemies.
+  or once per batch? Should it receive all enemies or only those in range?
+  Should enemy information be passed one enemy at a time or all together?
+  This will be answered by testing the new `CombatLogic` implementation.
 - **Events.** FR-S1, FR-S2 and FR-C2 need a record of what happened (enemy
   defeated, tower placed, game ended). To decide: how does the engine publish
   these events, and who listens?
