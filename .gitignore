@@ -1,10 +1,7 @@
-# Generated build output
-/build/
-**/build/
-!build/
-!build/**/*.pdf
-!meetings/build/
-!meetings/build/**/*.pdf
+# Generated output. build/pdf/ PDFs are committed so they can be read on
+# GitHub; LaTeX leftovers there are ignored by the rules below.
+/build/wiki/
+/tower_defence_code/build/
 
 # LaTeX auxiliary files
 *.aux

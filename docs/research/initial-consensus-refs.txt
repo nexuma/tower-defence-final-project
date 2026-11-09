@@ -1,0 +1,214 @@
+\begin{filecontents}{refs.bib}
+@article{Ahmad2020StaDART:,
+title={StaDART: Addressing the problem of dynamic code updates in the security analysis of android applications},
+author={Maqsood Ahmad and Valerio Costamagna and Bruno Crispo and Francesco Bergadano and Yury Zhauniarovich},
+journal={J. Syst. Softw.},
+year={2020},
+volume={159},
+doi={10.1016/j.jss.2019.07.088}
+}
+
+@article{Alhanahnah2020DINA:,
+title={DINA: Detecting Hidden Android Inter-App Communication in Dynamic Loaded Code},
+author={Mohannad J. Alhanahnah and Qiben Yan and H. Bagheri and Hao Zhou and Yutaka Tsutano and W. Srisa-an and Xiapu Luo},
+journal={IEEE Transactions on Information Forensics and Security},
+year={2020},
+volume={15},
+pages={2782-2797},
+doi={10.1109/tifs.2020.2976556}
+}
+
+@article{Bhan2025DLCDroid,
+title={DLCDroid an android apps analysis framework to analyse the dynamically loaded code},
+author={R. Bhan and Raj Pamula and K. S. Kumar and Nand Kumar Jyotish and Prasun Chandra Tripathi and Parvez Faruki and Jyoti Gajrani},
+journal={Scientific Reports},
+year={2025},
+volume={15},
+doi={10.1038/s41598-025-88003-6}
+}
+
+@article{Chauhan2023Dynamic,
+title={Dynamic Code Updates: A Hidden Threat in App Store Security},
+author={Vinay Chauhan and Neeraj Kumar and Shiv Aggarwal and Ayush Gupta and Seepe Sharma and D. Mishra},
+journal={Journal of Clinical Forensic Sciences},
+year={2023},
+doi={10.21088/jcfs.3107.6874.4126.2}
+}
+
+@article{Falsina2015Grab,
+title={Grab 'n Run: Secure and Practical Dynamic Code Loading for Android Applications},
+author={Luca Falsina and Y. Fratantonio and S. Zanero and Christopher Krügel and Giovanni Vigna and F. Maggi},
+journal={Proceedings of the 31st Annual Computer Security Applications Conference},
+year={2015},
+doi={10.1145/2818000.2818042}
+}
+
+@article{Kelec2020A,
+title={A proposal for addressing security issues related to dynamic code loading on Android platform},
+author={Aleksandar Kelec and Zoran Djuric},
+journal={Comput. Syst. Sci. Eng.},
+year={2020},
+volume={35},
+doi={10.32604/csse.2020.35.271}
+}
+
+@article{Maier2015A,
+title={A game of Droid and Mouse: The threat of split-personality malware on Android},
+author={D. Maier and Mykola Protsenko and Tilo Müller},
+journal={Comput. Secur.},
+year={2015},
+volume={54},
+pages={2-15},
+doi={10.1016/j.cose.2015.05.001}
+}
+
+@article{Mineau2025Class,
+title={Class Loaders in the Middle: Confusing Android Static Analyzers},
+author={Jean-Marie Mineau and Jean-François Lalande},
+journal={Digital Threats: Research and Practice},
+year={2025},
+volume={6},
+pages={1 - 19},
+doi={10.1145/3754457}
+}
+
+@article{Pettersen2016Dynamically,
+title={Dynamically Loading Mobile/Cloud Assemblies},
+author={Robert Pettersen and H. Johansen and Steffen Viken Valvåg and D. Johansen},
+year={2016},
+pages={170-186},
+doi={10.1007/978-3-319-62594-2_9}
+}
+
+@article{Pink2010Safe,
+title={Safe Execution of Dynamically Loaded Code on Mobile Phones},
+author={Glen Pink and Simon Gerber and M. Fry and J. Kay and B. Kummerfeld and Rainer Wasinger},
+year={2010},
+pages={1-12},
+doi={10.1007/978-3-642-29154-8_1}
+}
+
+@article{Poeplau2014Execute,
+title={Execute This! Analyzing Unsafe and Malicious Dynamic Code Loading in Android Applications},
+author={Sebastian Poeplau and Y. Fratantonio and Antonio Bianchi and Christopher Krügel and Giovanni Vigna},
+year={2014},
+doi={10.14722/ndss.2014.23328}
+}
+
+@article{Qu2017DyDroid:,
+title={DyDroid: Measuring Dynamic Code Loading and Its Security Implications in Android Applications},
+author={Zhengyang Qu and Shahid Alam and Yan Chen and Xiao-Yong Zhou and Wang-Jun Hong and Ryan D. Riley},
+journal={2017 47th Annual IEEE/IFIP International Conference on Dependable Systems and Networks (DSN)},
+year={2017},
+pages={415-426},
+doi={10.1109/dsn.2017.14}
+}
+
+@article{Ruggia2025The,
+title={The Dark Side of Native Code on Android},
+author={Antonio Ruggia and Andrea Possemato and Savino Dambra and Alessio Merlo and Simone Aonzo and Davide Balzarotti},
+journal={ACM Transactions on Privacy and Security},
+year={2025},
+volume={28},
+pages={1 - 33},
+doi={10.1145/3712308}
+}
+
+@article{Zhang2025Shelving,
+title={Shelving it rather than Ditching it: Dynamically Debloating DEX and Native Methods of Android Applications without APK Modification},
+author={Zicheng Zhang and Jiakun Liu and Ferdian Thung and Haoyu Ma and Rui Li and Yan Naing Tun and Wei Minn and L. K. Shar and S. Maoz and Eran Toch and David Lo and Joshua Wong and Debin Gao},
+journal={ArXiv},
+year={2025},
+volume={abs/2501.04963},
+doi={10.48550/arxiv.2501.04963}
+}
+
+@article{Zhong2016Research,
+title={Research on intelligent dynamic loading mechanism of mobile applications},
+author={Junjie Zhong and Chen Liu and Jiapeng Xiu and Zhengqiu Yang},
+journal={2016 16th International Symposium on Communications and Information Technologies (ISCIT)},
+year={2016},
+pages={681-685},
+doi={10.1109/iscit.2016.7751720}
+}
+
+@article{Zhou2022Dynamic,
+title={Dynamic Class Generating and Loading Technology in Android Web Application},
+author={Wenwen Zhou and Yong-Zhi Yang and Jiejuan Wang},
+journal={2022 International Symposium on Networks, Computers and Communications (ISNCC)},
+year={2022},
+pages={1-6},
+doi={10.1109/isncc55209.2022.9851782}
+}
+\end{filecontents}
+
+\documentclass{article}
+\usepackage{adjustbox}
+\begin{document}
+
+\section*{Dynamic code loading offers \textbf{extensibility and efficiency} but introduces \textbf{severe security risks}}
+
+
+Research evaluates dynamic code loading (DCL) across three core facets: architectural uses and implementation mechanisms, system performance and resource impacts, and systemic security risks alongside detection countermeasures  \cite{Falsina2015Grab} \cite{Kelec2020A} \cite{Qu2017DyDroid:}.
+
+
+\subsection*{Architectural Mechanisms and Uses}
+
+
+Dynamic code loading allows mobile software to fetch and execute compiled classes or native libraries during runtime rather than bundling all components within the initial package  \cite{Qu2017DyDroid:} \cite{Ruggia2025The}. Applications primarily apply DCL using virtual machine class loaders, Java reflection, and native dynamic linking functions such as \texttt{dlopen} and \texttt{dlsym}  \cite{Kelec2020A} \cite{Ruggia2025The} \cite{Ahmad2020StaDART:}. On platforms like Android, this framework dynamically executes bytecode packaged in \texttt{.apk}, \texttt{.jar}, or \texttt{.dex} containers directly from internal storage, remote servers, or external cloud repositories  \cite{Falsina2015Grab} \cite{Ahmad2020StaDART:} \cite{Pettersen2016Dynamically}.
+
+
+\begin{itemize}
+\item Developers use dynamic loading to deliver \textbf{modular software updates} and incremental features without forcing full application reinstalls  \cite{Bhan2025DLCDroid} \cite{Pettersen2016Dynamically}.
+\item Shared ad networks and third-party software development kits (SDKs) leverage runtime loading to run \textbf{centralized common frameworks} across multiple host client applications  \cite{Qu2017DyDroid:} \cite{Bhan2025DLCDroid} \cite{Kelec2020A}.
+\item Runtime loading enables \textbf{client-side personalization} and context-aware behavior by pulling specialized modules based on environmental demands or cross-platform web specifications  \cite{Zhou2022Dynamic} \cite{Pink2010Safe} \cite{Mineau2025Class}.
+\end{itemize}
+
+
+\subsection*{Performance and Resource Optimization}
+
+
+Loading components on demand enables mobile systems to conserve disk footprint, trim runtime execution overhead, and improve initial execution responsiveness  \cite{Falsina2015Grab} \cite{Kelec2020A} \cite{Zhong2016Research}. Dynamic architectures also support debloating schemas that strip unused methods out of memory to reduce unnecessary CPU cycles  \cite{Zhang2025Shelving}.
+
+
+\mbox{}\\
+\begin{adjustbox}{max width=\textwidth}
+\begin{tabular}{p{5.3cm} | p{5.3cm} | p{5.3cm}}
+\hline
+Optimization Domain & Mechanism & System Benefit \\
+\hline
+\textbf{Startup Latency} & Modular on-demand class loading & Accelerates initial application launch by deferring unneeded execution classes  \cite{Falsina2015Grab} \cite{Kelec2020A}. \\
+\textbf{Memory Footprint} & Dynamic native/bytecode debloating & Halts interpretation of unused methods and zero-fills unused native spaces  \cite{Zhang2025Shelving}. \\
+\textbf{Network \& Distribution} & Assembly caching and DNS lookup & Hides latency and manages bandwidth via prefetching remote assemblies  \cite{Pettersen2016Dynamically}. \\
+\textbf{Execution Size} & Intelligent modular loading & Achieves smooth runtime execution within resource-constrained mobile hardware  \cite{Zhong2016Research}. \\
+\textbf{Attack Surface Trimming} & Runtime gadget elimination & Dynamic debloating reduces thousands of Return-Oriented Programming (ROP) gadgets  \cite{Zhang2025Shelving}. \\
+\hline
+\end{tabular}
+\end{adjustbox}
+
+
+\textbf{Figure 1:} Resource and structural benefits identified across dynamic code loading implementations.
+
+
+Measurement evaluations indicate that debloating unnecessary dynamic methods yields lower overall CPU and RAM demands compared to unmanaged monolithic software  \cite{Zhang2025Shelving}. The ratio of resource consumption differences between debloated apps and their original unpruned baselines demonstrates these operational gains in runtime profiling. (Figure 6: The ratio of the resources (i.e., CPU and memory) usage difference between debloated apps and original apps. The red bars represents the median values.)
+
+
+\subsection*{Security Risks and Defenses}
+
+
+Dynamic code loading bypasses the conventional assumption that application code remains immutable after app-store security verification  \cite{Poeplau2014Execute} \cite{Kelec2020A} \cite{Chauhan2023Dynamic}. Because downloaded payloads are absent during app store vetting, untrusted servers or man-in-the-middle attacks can inject malicious components that automatically inherit the host application's complete device permissions  \cite{Kelec2020A} \cite{Ahmad2020StaDART:}.
+
+
+Malicious actors intentionally employ dynamic loading alongside reflection and native wrappers to evade static detection, conceal data leaks, and establish hidden inter-app communications  \cite{Bhan2025DLCDroid} \cite{Ruggia2025The} \cite{Alhanahnah2020DINA:}. A large-scale analysis of over 46,000 applications revealed that 87 apps loaded malicious binaries that went undetected by standard antivirus engines, and 14 apps exposed severe code injection vulnerabilities because loaded code was kept in world-writable directories  \cite{Qu2017DyDroid:}. Across malware corpora, researchers observe that over 30\% to 36\% of malicious apps utilize dynamic loading to unpack secondary payloads or evade sandboxes  \cite{Kelec2020A} \cite{Maier2015A}. Furthermore, adversaries use shadow attacks to collide dynamically loaded class names against native Android APIs, causing static analysis engines to generate erroneous analysis graphs  \cite{Mineau2025Class}.
+
+
+To safely apply DCL, software frameworks incorporate secure verification drop-in libraries like Grab 'n Run, which automate cryptographic signature and certificate checks before class loading without altering underlying Dalvik or ART runtimes  \cite{Falsina2015Grab}. Defenses also rely on hybrid static-dynamic analysis frameworks, API hooking via virtual method table tampering, and sandboxed runtimes to monitor behavior post-installation  \cite{Ahmad2020StaDART:} \cite{Pettersen2016Dynamically}.
+
+
+In summary, mobile dynamic code loading provides flexible runtime modularity, swift updating capabilities, and memory-saving potential, but its implementation requires rigorous integrity verification and runtime monitoring to avoid severe injection vulnerabilities and malware evasion.
+
+% These search results were found and analyzed using Consensus, an AI-powered search engine for research. Try it at https://consensus.app. © 2026 Consensus NLP, Inc. Personal, non-commercial use only; redistribution requires copyright holders’ consent.
+
+\bibliographystyle{plain}
+\bibliography{refs}
+\end{document}

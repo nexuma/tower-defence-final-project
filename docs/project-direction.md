@@ -5,7 +5,7 @@ Last reviewed: 2 November 2026
 ## AI-use disclaimer
 
 This document was generated and structured with the assistance of artificial intelligence. It summarises ideas discussed in supervisor meetings and other project discussions and thoughts I had. AI was used to organise and present those ideas in a structured form, not to replace the underlying project decisions or evidence. Its value is primarily practical: it provides a single place to keep track of possible directions, questions,
-alternatives. As new ideas occur, they may be added with AI assistance so that they are not forgotten and can be reviewed in an organised way. The meeting minutes, technical experiments, research sources, and confirmed decisions remain the authoritative evidence for the project.
+alternatives, and decisions. As new ideas occur, they may be added with AI assistance so that they are not forgotten and can be reviewed in an organised way. The meeting minutes, technical experiments, research sources, and confirmed decisions remain the authoritative evidence for the project.
 
 ## Purpose
 
@@ -13,12 +13,14 @@ This document records the direction of the project while it is still being
 explored. It separates:
 
 - ideas that were considered
+- decisions that have been made
 - questions that still need evidence
 - possible dissertation conclusions
 - work that is deliberately outside the current minimum viable product.
 
-It is not a promise that every possible extension will be
-implemented. The supervisor meeting minutes remain the chronological record of what was discussed. This document consolidates those discussions into a
+It is a decision record, not a promise that every possible extension will be
+implemented. The supervisor meeting minutes remain the chronological record of
+what was discussed. This document consolidates those discussions into a
 roadmap that can be updated as technical evidence is collected.
 
 ## Starting point: Flutter Hot Reload
@@ -176,6 +178,11 @@ This does **not** yet commit the project to building a complete recommender
 system, a production A/B-testing platform, or a commercial game.
 
 ## Existing prototype evidence
+
+> **Retired (9 November 2026).** The prototype has been demonstrated and is no
+> longer developed. The game is being rebuilt from scratch with the
+> structure in [architecture.md](architecture.md). The findings below remain
+> valid evidence; the code is not reused.
 
 The project already contains a separate [`prototype` branch](https://github.com/nexuma/tower-defence-final-project/tree/prototype)
 with commit `26ae1e1` demonstrating a first Flame-to-`dart_eval` integration.
@@ -590,54 +597,8 @@ instead.
 
 ## Roadmap
 
-### Near term: establish evidence
-
-- freeze the functional-requirement baseline;
-- document the architecture and dynamic boundary;
-- review the prototype branch and record what is already proven;
-- reproduce the damage calculation with a focused automated test;
-- identify the smallest changes needed to make the script replaceable;
-- replace the default Flutter counter application with a minimal host;
-- implement a basic game state, board, towers, enemies, and waves;
-- start the structured event-log design;
-- record technical limitations and failed approaches as evidence.
-
-### Middle term: demonstrate the core experiment
-
-- implement the Flame-to-`dart_eval` bridge;
-- execute one small replaceable rule, such as damage calculation;
-- validate results and handle errors;
-- compare static and dynamic versions of the same rule;
-- measure execution time, memory where practical, and observable reliability;
-- implement only the minimum telemetry needed for the selected evaluation;
-- record whether the incubator is treated as a game mechanic, an optimisation
-  experiment, or both.
-
-### Later term: select and evaluate one application
-
-Choose the strongest evidence-supported application:
-
-- dynamic balancing;
-- genetic-algorithm configuration search;
-- a rule-based recommendation;
-- a limited configuration experiment; or
-- adaptive player-facing content;
-- dynamic telemetry collection;
-- multi-user comparison or strategy sharing.
-
-Do not implement several applications merely to make the project appear
-larger. A well-evaluated narrow result is more appropriate for a 20-credit
-project.
-
-### Final term: dissertation and presentation
-
-- report the original Hot Reload hypothesis and why it was rejected as the
-  production mechanism;
-- explain the alternatives and decision criteria;
-- describe the selected architecture and its boundaries;
-- evaluate the technical result against measurable criteria;
-- state clearly what was demonstrated, what was not demonstrated, and what
-  would be required for a larger recommender or A/B-testing system.
+The phased roadmap is kept in the [project plan](plan.md#phases), so the
+order of work is recorded in one place.
 
 ## Open questions
 
