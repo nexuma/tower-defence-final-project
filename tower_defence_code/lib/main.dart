@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flame/game.dart';
 
+import 'view/tower_defence_game.dart';
+
 void main() {
   runApp(const TowerDefenceApp());
 }
@@ -11,11 +13,9 @@ class TowerDefenceApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Tower Defense',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
       home: GameWidget.controlled(gameFactory: TowerDefenceGame.new),
     );
   }
 }
-
-class TowerDefenceGame extends FlameGame {}
