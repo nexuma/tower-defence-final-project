@@ -129,12 +129,76 @@ The tower selector shows a definition's name, range, projectile and damage per
 second. Damage per second is calculated for display
 (`projectile damage × damageMultiplier ÷ cooldown`) rather than stored.
 
-**Needed from later steps:** enemies need an `id`, a position in cells and a
-hitbox `radius` (AD-10).
+### Enemy
+
+```text
+EnemyDefinition        one per kind of enemy (Type Object, AD-6)
+  key, name            stable ID and display name
+  maxHealth            health when spawned
+  speed                cells per second along the path
+  radius               cells; size of the hitbox (AD-10)
+
+Enemy                  one per enemy on the board
+  id                   incrementing integer issued by the engine
+  definitionKey        which EnemyDefinition it is
+  health               dies at 0 or below
+  distanceTravelled    cells walked along the path; position is worked out
+                       from this with GameMap.positionAt
+```
+
+Storing the distance rather than x and y makes movement one addition
+(`distance += speed × dt`), makes "reached the base" a comparison
+(`distance ≥ pathLength`), and makes "the enemy furthest along" easy to find
+for targeting.
+
+### Board
+
+```text
+Cell(x, y)             a grid square; whole numbers; usable as a map key
+Position(x, y)         a point in cells (decimals); the centre of Cell(x, y)
+                       is Position(x + 0.5, y + 0.5)
+
+GameMap                the board
+  width, height        in cells: board size is defined only here
+  path                 waypoint cells from spawn to base; consecutive
+                       waypoints share a row or column (straight segments)
+  pathLength           cells from the first to the last waypoint centre
+  isOnPath(cell)       true for every cell the path passes through;
+                       towers cannot be placed there
+  positionAt(d)        where an enemy is after walking d cells
+```
+
+Paths are designed by hand as data; they are not generated. Enemies spawn at
+the first waypoint, and the last waypoint is the home base. There is no
+separate base object. An invalid path (empty, diagonal step, waypoint off the
+board) is rejected when the map is created.
+
+### Waves and game state
+
+```text
+SpawnGroup             enemyKey, count, secondsBetween
+Wave                   a list of SpawnGroups, spawned in order
+
+GameState              everything about a game in progress, as plain data
+  map, lives
+  towerDefinitions, projectileDefinitions, enemyDefinitions   by key
+  towers               tower ID → Tower
+  towerCells           tower ID → Cell (AD-7)
+  enemies              enemy ID → Enemy
+  shots                PendingShots in the air
+  waves, currentWaveIndex
+  status               playing, won or lost; set by the engine
+```
+
+Definitions are immutable. Instances (towers, enemies, shots) are changed in
+place by the engine every tick, so no copies are made per frame. The model is
+never sent to `dart_eval` directly: the engine translates it into
+`CombatLogic`'s own types (AD-13).
 
 **Deliberately left out for now:** genetics and unique towers, gold and tower
-cost, inventory, upgrades, status effects (slow, poison), dodging. The design
-leaves room for each of these.
+cost, inventory, upgrades, status effects (slow, poison), dodging, score
+(FR-S1), enemies costing more than one life. The design leaves room for each
+of these.
 
 ## Open architecture questions
 
@@ -153,7 +217,7 @@ leaves room for each of these.
 
 ## Next design steps
 
-1. Domain model: tower ✅; still to do: enemy, cell and grid, wave, game state
+1. Domain model ✅: tower, enemy, board, wave, game state
    ([#11](https://github.com/nexuma/tower-defence-final-project/issues/11),
    [#12](https://github.com/nexuma/tower-defence-final-project/issues/12)).
 2. First rule: the signature and behaviour of tower placement, FR-M1

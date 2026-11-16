@@ -5,6 +5,18 @@ import 'projectile.dart';
 import 'tower.dart';
 import 'wave.dart';
 
+/// Whether the game is still running, and how it ended.
+enum GameStatus {
+  /// Waves are still being played.
+  playing,
+
+  /// Every wave was cleared with lives remaining.
+  won,
+
+  /// Lives reached 0.
+  lost,
+}
+
 /// Everything that describes a game in progress, as plain data.
 ///
 /// The model holds no rules: only the engine changes it (AD-1, AD-2).
@@ -45,4 +57,7 @@ class GameState {
 
   /// Index into [waves] of the wave being played.
   int currentWaveIndex = 0;
+
+  /// Set by the engine when the game ends.
+  GameStatus status = GameStatus.playing;
 }
