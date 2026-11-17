@@ -20,6 +20,7 @@ time log, and supervisor meeting minutes.
 - [Meeting 4](Meeting-04)
 - [Meeting 5](Meeting-05)
 - [Meeting 6](Meeting-06)
+- [Meeting 7](Meeting-07)
 
 ## Where these pages come from
 
