@@ -55,8 +55,22 @@ class GameState {
   /// The waves of this game, in order.
   final List<Wave> waves;
 
-  /// Index into [waves] of the wave being played.
-  int currentWaveIndex = 0;
+  /// How many waves have been started. The wave in play is
+  /// `waves[wavesStarted - 1]`.
+  int wavesStarted = 0;
+
+  /// True from the moment a wave is started until it is fully spawned and
+  /// every enemy in it is gone.
+  bool waveInProgress = false;
+
+  /// Which [SpawnGroup] of the current wave is spawning.
+  int spawnGroupIndex = 0;
+
+  /// How many enemies of that group have been spawned so far.
+  int spawnedInGroup = 0;
+
+  /// Seconds until the next enemy is spawned.
+  double timeUntilNextSpawn = 0;
 
   /// Set by the engine when the game ends.
   GameStatus status = GameStatus.playing;

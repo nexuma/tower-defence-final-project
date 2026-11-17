@@ -62,6 +62,9 @@ retired and its code is not reused; only its findings carry forward.
 | AD-11 | Shot damage is the projectile's base damage multiplied by the tower's `damageMultiplier`, worked out when the shot is fired.                                                                                                                                                                                                        | Damage on the tower only; damage on the projectile only; adding instead of multiplying.         | The same projectile keeps its character from any tower, while stronger towers scale it. Multiplying keeps the proportions between projectiles, which makes balancing easier. Fixing the damage when the shot is fired means later upgrades or effects do not change shots already in the air.                                                                                                                                                                                                                                                                                                                                                                                                    |
 | AD-12 | The code is split into the folders `model/`, `engine/`, `combat_logic/` and `view/` under `lib/`, with fixed import rules (see [Folders and import rules](#folders-and-import-rules)). Imports point towards the model and never back. Only `main.dart` imports everything and connects the parts. Tests mirror the `lib/` folders. | One flat folder; folders without import rules.                                                  | The import rules make AD-1 to AD-3 checkable: if `model/` imports Flame or the engine, a decision has been broken. One-way imports prevent cycles, so each layer can be tested on its own. `main.dart` is the composition root: it chooses the `CombatLogic` implementation and hands it to the engine (dependency injection), so the engine never knows which one it uses.                                                                                                                                                                                                                                                                                                                      |
 | AD-13 | `combat_logic/` does not import the model. It defines its own small input and result types, and the engine translates between those and the model.                                                                                                                                                                                  | `CombatLogic` receives model types (`Tower`, `Enemy`) directly.                                 | The sandbox boundary is fully separate from the model, so the model can change without breaking loaded logic, and the data sent into `dart_eval` is exactly what is chosen for it. This makes the cost of crossing the boundary (Meeting 6) visible and measurable. Cost: more code, and the engine copies data each call.                                                                                                                                                                                                                                                                                                                                                                       |
+| AD-14 | `CombatLogic` decides **targeting and damage**: for each ready tower, which enemy it shoots and for how much. The engine keeps movement, timers and hit detection. | Targeting only; the whole shot resolution including hits. | Both targeting strategies and damage formulas can be swapped at runtime, which gives the research something meaningful to load, while the boundary stays small. |
+| AD-15 | The engine calls `CombatLogic` through the interface from the start, with `NativeCombatLogic` as the first implementation. It checks every returned decision (the tower exists and is ready, the enemy exists and is in range, the damage is not negative, at most one shot per tower) and ignores invalid ones. | Hard-code combat in the engine first and extract it later. | The boundary is designed rather than shaped by existing code. Rules stay in one place (AD-3), so faulty dynamically loaded logic cannot break the game. |
+| AD-16 | A wave starts when the player gives the `startNextWave` command. The spawning progress is stored in `GameState`. | Waves start automatically after a delay; spawning progress kept inside the engine. | The player has time to place towers between waves. With the progress in the model, the state is complete on its own and the view can show it. |
 
 ## Folders and import rules
 
@@ -186,7 +189,10 @@ GameState              everything about a game in progress, as plain data
   towerCells           tower ID → Cell (AD-7)
   enemies              enemy ID → Enemy
   shots                PendingShots in the air
-  waves, currentWaveIndex
+  waves
+  wavesStarted         how many waves have been started; 0 at the start
+  waveInProgress       from startNextWave until spawned and cleared (AD-16)
+  spawnGroupIndex, spawnedInGroup, timeUntilNextSpawn   spawning progress
   status               playing, won or lost; set by the engine
 ```
 
@@ -200,6 +206,32 @@ cost, inventory, upgrades, status effects (slow, poison), dodging, score
 (FR-S1), enemies costing more than one life. The design leaves room for each
 of these.
 
+## Engine and combat logic
+
+```text
+GameEngine(state, combatLogic)       combatLogic is passed in by main.dart (AD-12)
+  startNextWave() → bool             false if a wave is running, none are left, or the game is over
+  tick(dt)                           does nothing once the game is won or lost
+    1. Spawn    count down; create enemies from the current SpawnGroup
+    2. Move     distance += speed × dt; at the end: remove, lives − 1
+    3. Shots    update lastKnownTargetPosition; count down; resolve hits at 0 (AD-10)
+    4. Towers   count down cooldowns; one decideShots call for all ready towers;
+                check and apply the decisions (AD-15)
+    5. End      lives ≤ 0 → lost; last wave spawned and cleared → won
+
+CombatLogic.decideShots(CombatRequest) → List<ShotDecision>       (AD-14)
+  CombatRequest    readyTowers: id, x, y, range, baseDamage, damageMultiplier
+                   enemies:     id, x, y, distanceTravelled, health
+  ShotDecision     towerId, targetEnemyId, damage
+
+NativeCombatLogic  targets the enemy in range furthest along the path ("first");
+                   damage = baseDamage × damageMultiplier (AD-11)
+```
+
+Enemies move before shots are updated and towers fire, so shots always aim at
+where an enemy is in the current tick. Tower range is measured from the
+centre of the tower's cell to the enemy's position.
+
 ## Open architecture questions
 
 - **Engine timing.** Dart runs the engine and Flame on one thread, so a slow
@@ -210,7 +242,9 @@ of these.
 - **Sandbox call frequency** (Meeting 6): every frame, every attack cooldown,
   or once per batch? Should it receive all enemies or only those in range?
   Should enemy information be passed one enemy at a time or all together?
-  This will be answered by testing the new `CombatLogic` implementation.
+  The current starting point: `decideShots` is called only on ticks where a
+  tower is ready, once for all ready towers, with all enemies. Each of these
+  can be varied for measurement without changing the model (AD-13).
 - **Events.** FR-S1, FR-S2 and FR-C2 need a record of what happened (enemy
   defeated, tower placed, game ended). To decide: how does the engine publish
   these events, and who listens?
@@ -226,7 +260,8 @@ of these.
 4. The Flame layer: `InputHandler` and `ViewSync`
    ([#8](https://github.com/nexuma/tower-defence-final-project/issues/8),
    [#13](https://github.com/nexuma/tower-defence-final-project/issues/13)).
-5. The `CombatLogic` sandbox boundary (FR-M2,
+5. The `CombatLogic` sandbox boundary: interface and native version ✅
+   (AD-14, AD-15); `SandboxCombatLogic` still to do (FR-M2,
    [#2](https://github.com/nexuma/tower-defence-final-project/issues/2),
    [#9](https://github.com/nexuma/tower-defence-final-project/issues/9)).
 6. The folder structure ✅ (AD-12,
