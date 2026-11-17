@@ -38,6 +38,9 @@ class ViewSync extends Component {
   static final _hudText = TextPaint(
     style: const TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
   );
+  static final _smallText = TextPaint(
+    style: const TextStyle(color: Color(0xFFDDDDDD), fontSize: 14),
+  );
   static final _bigText = TextPaint(
     style: const TextStyle(color: Color(0xFFFFFFFF), fontSize: 48),
   );
@@ -140,7 +143,11 @@ class ViewSync extends Component {
     var text = 'Lives ${state.lives}    Wave $waveText    Towers $towersText';
     final message = input.lastMessage;
     if (message != null) text += '    $message';
-    _hudText.render(canvas, text, Vector2(12, 10));
+    _hudText.render(canvas, text, Vector2(12, 8));
+    final combat = input.combatControls?.status();
+    if (combat != null) {
+      _smallText.render(canvas, 'Combat: $combat', Vector2(12, 34));
+    }
 
     final ending = switch (state.status) {
       GameStatus.playing => null,

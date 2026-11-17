@@ -65,6 +65,8 @@ retired and its code is not reused; only its findings carry forward.
 | AD-14 | `CombatLogic` decides **targeting and damage**: for each ready tower, which enemy it shoots and for how much. The engine keeps movement, timers and hit detection. | Targeting only; the whole shot resolution including hits. | Both targeting strategies and damage formulas can be swapped at runtime, which gives the research something meaningful to load, while the boundary stays small. |
 | AD-15 | The engine calls `CombatLogic` through the interface from the start, with `NativeCombatLogic` as the first implementation. It checks every returned decision (the tower exists and is ready, the enemy exists and is in range, the damage is not negative, at most one shot per tower) and ignores invalid ones. | Hard-code combat in the engine first and extract it later. | The boundary is designed rather than shaped by existing code. Rules stay in one place (AD-3), so faulty dynamically loaded logic cannot break the game. |
 | AD-16 | A wave starts when the player gives the `startNextWave` command. The spawning progress is stored in `GameState`. | Waves start automatically after a delay; spawning progress kept inside the engine. | The player has time to place towers between waves. With the progress in the model, the state is complete on its own and the view can show it. |
+| AD-17 | Data crosses into `dart_eval` as **flat lists of numbers**: 6 per tower (id, x, y, range, baseDamage, damageMultiplier), 5 per enemy (id, x, y, distanceTravelled, health), and 3 per returned shot (towerId, targetEnemyId, damage). | Lists of maps with named fields; generated bindings so the script uses `CombatTower` directly. | Numbers are what `dart_eval` passes most cheaply and need no generated code. The cost is readability: the script reads fields by position. The three options can later be compared as a measurement for Meeting 6. |
+| AD-18 | Scripts are loaded from `assets/combat_scripts/` and compiled once with `dart_eval`. `FallbackCombatLogic` switches to `NativeCombatLogic` for the rest of the game when the script throws or returns malformed data; a script that does not compile is never used. The engine's combat logic can be replaced while the game runs. | Stop the game on a script error; retry the script. | The game never breaks because of loaded code (AD-2). A replaceable logic makes loading without a restart possible. Later, downloaded scripts go into the app's documents folder (assets are read-only), and only the code that reads the text changes. |
 
 ## Folders and import rules
 
@@ -252,6 +254,27 @@ keeping one Flame component per model object, so no IDs need to be matched
 at 0.1 s so the game slows down after a pause rather than jumping ahead; the
 engine-timing question below is still open.
 
+## Combat scripts (FR-M2)
+
+```text
+assets/combat_scripts/first_targeting.dart       "first" targeting; same decisions as NativeCombatLogic
+assets/combat_scripts/strongest_targeting.dart   the enemy in range with the most health
+
+SandboxCombatLogic(source)    compiles once; decideShots flattens the request (AD-17),
+                              calls the script, and checks the result
+FallbackCombatLogic           primary until its first failure, then fallback (AD-18)
+CombatControls (view)         script names, load(name), status(): plain functions
+                              from main.dart, so the view never imports combat_logic
+```
+
+The "Next script" button loads, compiles and swaps the next script while the
+game runs; the HUD shows which logic is in use and why a script failed.
+
+**Known limitations.** `dart_eval` has no time limit, so a script that never
+returns freezes the game; only running it in a separate isolate would prevent
+that. Compiling happens on the main thread, so loading a large script can
+stall a few frames.
+
 ## Open architecture questions
 
 - **Engine timing.** Dart runs the engine and Flame on one thread, so a slow
@@ -265,6 +288,9 @@ engine-timing question below is still open.
   The current starting point: `decideShots` is called only on ticks where a
   tower is ready, once for all ready towers, with all enemies. Each of these
   can be varied for measurement without changing the model (AD-13).
+- **Downloading scripts.** Download into the documents folder in the
+  background, compile in an isolate and send the bytecode back, then swap
+  (AD-18).
 - **Events.** FR-S1, FR-S2 and FR-C2 need a record of what happened (enemy
   defeated, tower placed, game ended). To decide: how does the engine publish
   these events, and who listens?
@@ -281,7 +307,8 @@ engine-timing question below is still open.
    ([#8](https://github.com/nexuma/tower-defence-final-project/issues/8),
    [#13](https://github.com/nexuma/tower-defence-final-project/issues/13)).
 5. The `CombatLogic` sandbox boundary: interface and native version ✅
-   (AD-14, AD-15); `SandboxCombatLogic` still to do (FR-M2,
+   (AD-14, AD-15); `SandboxCombatLogic` from asset scripts ✅ (AD-17,
+   AD-18); downloading still to do (FR-M2,
    [#2](https://github.com/nexuma/tower-defence-final-project/issues/2),
    [#9](https://github.com/nexuma/tower-defence-final-project/issues/9)).
 6. The folder structure ✅ (AD-12,

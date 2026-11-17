@@ -39,7 +39,10 @@ class GameEngine {
   GameEngine({required this.state, required this.combatLogic});
 
   final GameState state;
-  final CombatLogic combatLogic;
+
+  /// Can be replaced while the game runs, for example by a newly loaded
+  /// script. The next tick uses the new logic.
+  CombatLogic combatLogic;
 
   int _nextEnemyId = 1;
   int _nextTowerId = 1;

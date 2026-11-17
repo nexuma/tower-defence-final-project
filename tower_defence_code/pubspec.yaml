@@ -59,6 +59,11 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
+  # Combat logic scripts, loaded and compiled with dart_eval at runtime.
+  # Downloaded scripts will later use the same file names.
+  assets:
+    - assets/combat_scripts/
+
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

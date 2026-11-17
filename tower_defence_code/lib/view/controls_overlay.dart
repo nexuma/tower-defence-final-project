@@ -18,9 +18,21 @@ class ControlsOverlay extends StatelessWidget {
       alignment: Alignment.topRight,
       child: Padding(
         padding: const EdgeInsets.all(4),
-        child: ElevatedButton(
-          onPressed: game.input.startNextWave,
-          child: const Text('Next wave'),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            if (game.combatControls != null) ...[
+              ElevatedButton(
+                onPressed: game.input.loadNextCombatScript,
+                child: const Text('Next script'),
+              ),
+              const SizedBox(width: 8),
+            ],
+            ElevatedButton(
+              onPressed: game.input.startNextWave,
+              child: const Text('Next wave'),
+            ),
+          ],
         ),
       ),
     );

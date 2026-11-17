@@ -4,19 +4,24 @@ import 'package:flame/game.dart';
 
 import '../engine/game_engine.dart';
 import 'board_layout.dart';
+import 'combat_controls.dart';
 import 'input_handler.dart';
 import 'view_sync.dart';
 
 /// The Flame game: runs the engine once per frame and holds the two view
 /// parts, [InputHandler] and [ViewSync].
 class TowerDefenceGame extends FlameGame {
-  TowerDefenceGame({required this.engine})
+  TowerDefenceGame({required this.engine, this.combatControls})
     : layout = BoardLayout(
         columns: engine.state.map.width,
         rows: engine.state.map.height,
+        hudHeight: 60,
       );
 
   final GameEngine engine;
+
+  /// Switchable combat scripts; null to keep the engine's logic as it is.
+  final CombatControls? combatControls;
   final BoardLayout layout;
   late final InputHandler input;
 
@@ -27,7 +32,15 @@ class TowerDefenceGame extends FlameGame {
 
   @override
   Future<void> onLoad() async {
-    input = InputHandler(engine: engine, layout: layout);
+    final controls = combatControls;
+    if (controls != null && controls.scriptNames.isNotEmpty) {
+      await controls.load(controls.scriptNames.first);
+    }
+    input = InputHandler(
+      engine: engine,
+      layout: layout,
+      combatControls: controls,
+    );
     add(input);
     add(ViewSync(state: engine.state, layout: layout, input: input));
   }

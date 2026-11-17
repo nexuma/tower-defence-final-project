@@ -3,16 +3,27 @@ import 'package:flame/events.dart';
 
 import '../engine/game_engine.dart';
 import 'board_layout.dart';
+import 'combat_controls.dart';
 
 /// Turns player input into commands for the engine (AD-3, AD-5).
 ///
 /// It never decides whether a command is allowed: the engine does, and the
 /// result is kept in [lastMessage] so the HUD can show it.
 class InputHandler extends PositionComponent with TapCallbacks {
-  InputHandler({required this.engine, required this.layout});
+  InputHandler({
+    required this.engine,
+    required this.layout,
+    this.combatControls,
+  });
 
   final GameEngine engine;
   final BoardLayout layout;
+
+  /// Null when the game runs without switchable scripts (for example in
+  /// tests).
+  final CombatControls? combatControls;
+
+  int _scriptIndex = 0;
 
   /// The tower kind placed on tap. Only one kind exists for now; the tower
   /// selector will set this later.
@@ -47,5 +58,17 @@ class InputHandler extends PositionComponent with TapCallbacks {
   /// Command from the "Next wave" button.
   void startNextWave() {
     lastMessage = engine.startNextWave() ? null : 'Finish this wave first';
+  }
+
+  /// Command from the "Next script" button: loads the next combat script
+  /// while the game keeps running.
+  Future<void> loadNextCombatScript() async {
+    final controls = combatControls;
+    if (controls == null || controls.scriptNames.isEmpty) return;
+    _scriptIndex = (_scriptIndex + 1) % controls.scriptNames.length;
+    final name = controls.scriptNames[_scriptIndex];
+    lastMessage = 'Loading $name...';
+    await controls.load(name);
+    lastMessage = null;
   }
 }
