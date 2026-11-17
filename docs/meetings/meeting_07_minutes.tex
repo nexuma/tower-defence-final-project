@@ -1,0 +1,108 @@
+\documentclass[12pt,a4paper]{article}
+
+\usepackage[a4paper,margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{enumitem}
+\setlength{\emergencystretch}{3em}
+
+\title{\textbf{Supervisor Meeting Minutes}\\Meeting 7}
+\author{Present: Matthew Chalmers, Jonas Leipner}
+\date{Date: 17 November 2026}
+
+\begin{document}
+\maketitle
+
+\section{Achieved in Previous Weeks}
+
+\noindent\textit{Previous weeks: 3--17 November 2026 (no meeting was held on
+10 November)}
+
+\begin{itemize}[leftmargin=*]
+    \item Rebuilt the game from scratch on the main branch; the prototype is
+    kept for archival purposes only.
+    \item Separated the game into a model, an engine and a view, so that Flame
+    only draws the game and passes on player input.
+    \item Implemented tower placement with the limit of five towers (FR-M1)
+    and the score for defeated enemies (FR-S1).
+    \item Moved the combat logic into a \texttt{dart\_eval} script, with the
+    native implementation as a fallback when a script fails (FR-M2).
+    \item Made it possible to swap the combat script while the game is
+    running, without restarting the application.
+    \item Recorded the architecture decisions in the decision log and set up
+    automated tests that run on every push.
+\end{itemize}
+
+\section{Issues Discussed \& Solutions Agreed}
+
+\begin{itemize}[leftmargin=*]
+    \item \textbf{Demonstration:} The working game was demonstrated, including
+    swapping the combat script during play so that towers change from
+    targeting the leading enemy to the strongest enemy.
+    \begin{itemize}
+        \item \textbf{Solution:} The current base is suitable to build the
+        research on.
+    \end{itemize}
+    \item \textbf{Limitations:} The current limitations were discussed:
+    \texttt{dart\_eval} has no time limit, so a script that never returns
+    freezes the game; compiling a script can briefly stall the game; and the
+    scripts are still bundled with the application rather than downloaded.
+    \begin{itemize}
+        \item \textbf{Solution:} These are recorded and do not block the next
+        steps.
+    \end{itemize}
+    \item \textbf{Project direction:} Four directions were compared: the
+    technical cost of the sandbox (A), the safety of dynamically loaded logic
+    (B), shared content between players (C), and live balancing (D).
+    \begin{itemize}
+        \item \textbf{Solution:} A and B are more standard and less
+        interesting as research, and can be done at any point. The project
+        will concentrate on C and D.
+    \end{itemize}
+    \item \textbf{Participants:} It is not yet known who is available to
+    interview and to play test the game, and whether they would be developers
+    willing to write custom code or players who would only play.
+    \begin{itemize}
+        \item \textbf{Solution:} Find out who is available and which group
+        they belong to, as this decides which features are worth building.
+    \end{itemize}
+    \item \textbf{Incubator for non-developers:} The incubator was discussed as
+    a way for players who do not write code to still create new towers.
+    \begin{itemize}
+        \item \textbf{Solution:} Research games that already use genetic or
+        evolving mechanics, such as Skylanders, the Game of Life, and games
+        where species or worlds mutate and evolve, and use them as examples to
+        build on.
+    \end{itemize}
+    \item \textbf{Interviews and ethics:} Early interviews are planned to
+    guide the game and the research. After a short, non-technical explanation
+    of dynamic loading and of the incubator, participants will be asked which
+    aesthetic they prefer (cute or more intense and edgy), whether the
+    incubator sounds appealing, and what they would find fun.
+    \begin{itemize}
+        \item \textbf{Solution:} Obtain the ethics checklist and have
+        participants sign it before the interviews.
+    \end{itemize}
+\end{itemize}
+
+\section{Objectives for This Week}
+
+\noindent\textit{Upcoming week: 17--24 November 2026}
+
+\begin{itemize}[leftmargin=*]
+    \item Find out who is available to interview and play test, and whether
+    they are developers or players.
+    \item Research games with genetic, mutating or evolving mechanics as
+    examples for the incubator.
+    \item Obtain the ethics checklist.
+    \item Prepare the interview questions and a simple explanation of dynamic
+    loading and the incubator for non-developers.
+\end{itemize}
+
+\section*{\small AI-use Disclaimer}
+\small The meeting content and source notes for these minutes are genuine.
+Artificial intelligence was used only to organise and summarise the notes
+and transcript into a more digestible format; it was not used to invent the
+meeting content or decisions.
+
+\end{document}
