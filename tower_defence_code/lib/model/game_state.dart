@@ -36,6 +36,9 @@ class GameState {
   /// The player loses when this reaches 0.
   int lives;
 
+  /// Points from defeated enemies (FR-S1).
+  int score = 0;
+
   /// Definitions by key (AD-6).
   final Map<String, TowerDefinition> towerDefinitions;
   final Map<String, ProjectileDefinition> projectileDefinitions;
@@ -62,6 +65,9 @@ class GameState {
   /// How many waves have been started. The wave in play is
   /// `waves[wavesStarted - 1]`.
   int wavesStarted = 0;
+
+  /// How many waves have been fully spawned and cleared.
+  int wavesCleared = 0;
 
   /// True from the moment a wave is started until it is fully spawned and
   /// every enemy in it is gone.

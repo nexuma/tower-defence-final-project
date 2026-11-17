@@ -6,6 +6,7 @@ import '../model/game_state.dart';
 import '../model/position.dart';
 import '../model/projectile.dart';
 import '../model/tower.dart';
+import 'game_event.dart';
 
 /// The outcome of [GameEngine.placeTower]: placed, or why it was refused.
 enum PlacementResult {
@@ -47,11 +48,44 @@ class GameEngine {
   int _nextEnemyId = 1;
   int _nextTowerId = 1;
 
+  final _listeners = <void Function(GameEvent)>[];
+
+  /// Calls [listener] with every event from now on, straight away and in the
+  /// order the events happen (AD-19).
+  void addListener(void Function(GameEvent) listener) =>
+      _listeners.add(listener);
+
+  void removeListener(void Function(GameEvent) listener) =>
+      _listeners.remove(listener);
+
+  void _emit(GameEvent event) {
+    for (final listener in List.of(_listeners)) {
+      listener(event);
+    }
+  }
+
   /// Command (FR-M1): place a tower of kind [definitionKey] on [cell].
   ///
   /// The tower is placed only if every check passes; otherwise nothing
   /// changes and the result says why. Towers can be placed during a wave.
   PlacementResult placeTower(String definitionKey, Cell cell) {
+    final result = _checkPlacement(definitionKey, cell);
+    if (result != PlacementResult.placed) {
+      _emit(
+        PlacementRejected(towerKey: definitionKey, cell: cell, reason: result),
+      );
+      return result;
+    }
+
+    final tower = Tower(id: _nextTowerId++, definitionKey: definitionKey);
+    state.towers[tower.id] = tower;
+    state.towerCells[tower.id] = cell;
+    _emit(TowerPlaced(towerId: tower.id, towerKey: definitionKey, cell: cell));
+    return PlacementResult.placed;
+  }
+
+  /// The FR-M1 rules: [PlacementResult.placed] if every check passes.
+  PlacementResult _checkPlacement(String definitionKey, Cell cell) {
     if (state.status != GameStatus.playing) return PlacementResult.gameOver;
     if (!state.towerDefinitions.containsKey(definitionKey)) {
       return PlacementResult.unknownTower;
@@ -62,10 +96,6 @@ class GameEngine {
     if (state.towers.length >= state.maxTowers) {
       return PlacementResult.tooManyTowers;
     }
-
-    final tower = Tower(id: _nextTowerId++, definitionKey: definitionKey);
-    state.towers[tower.id] = tower;
-    state.towerCells[tower.id] = cell;
     return PlacementResult.placed;
   }
 
@@ -84,6 +114,7 @@ class GameEngine {
     state.spawnGroupIndex = 0;
     state.spawnedInGroup = 0;
     state.timeUntilNextSpawn = 0;
+    _emit(WaveStarted(waveNumber: state.wavesStarted));
     return true;
   }
 
@@ -118,6 +149,7 @@ class GameEngine {
           health: definition.maxHealth,
         );
         state.enemies[enemy.id] = enemy;
+        _emit(EnemySpawned(enemyId: enemy.id, enemyKey: enemy.definitionKey));
         state.spawnedInGroup++;
         state.timeUntilNextSpawn += group.secondsBetween;
       }
@@ -137,6 +169,13 @@ class GameEngine {
       if (enemy.distanceTravelled >= state.map.pathLength) {
         state.enemies.remove(enemy.id);
         state.lives--;
+        _emit(
+          EnemyReachedBase(
+            enemyId: enemy.id,
+            enemyKey: enemy.definitionKey,
+            livesLeft: state.lives < 0 ? 0 : state.lives,
+          ),
+        );
       }
     }
   }
@@ -189,8 +228,22 @@ class GameEngine {
 
     for (final enemy in hit) {
       enemy.health -= shot.damage;
-      if (enemy.health <= 0) state.enemies.remove(enemy.id);
+      if (enemy.health <= 0) _defeat(enemy, byTower: shot.towerId);
     }
+  }
+
+  void _defeat(Enemy enemy, {required int byTower}) {
+    state.enemies.remove(enemy.id);
+    final value = state.enemyDefinitions[enemy.definitionKey]!.scoreValue;
+    state.score += value;
+    _emit(
+      EnemyDefeated(
+        enemyId: enemy.id,
+        enemyKey: enemy.definitionKey,
+        towerId: byTower,
+        scoreValue: value,
+      ),
+    );
   }
 
   Enemy _nearestTo(Position point, List<Enemy> enemies) {
@@ -286,17 +339,29 @@ class GameEngine {
   void _checkEnd() {
     if (state.lives <= 0) {
       state.lives = 0;
-      state.status = GameStatus.lost;
+      _end(GameStatus.lost);
       return;
     }
     if (state.waveInProgress &&
         _currentWaveFullySpawned &&
         state.enemies.isEmpty) {
       state.waveInProgress = false;
-      if (state.wavesStarted >= state.waves.length) {
-        state.status = GameStatus.won;
-      }
+      state.wavesCleared++;
+      _emit(WaveCleared(waveNumber: state.wavesStarted));
+      if (state.wavesStarted >= state.waves.length) _end(GameStatus.won);
     }
+  }
+
+  void _end(GameStatus status) {
+    state.status = status;
+    _emit(
+      GameEnded(
+        status: status,
+        score: state.score,
+        livesLeft: state.lives,
+        wavesCleared: state.wavesCleared,
+      ),
+    );
   }
 
   // --- Helpers ----------------------------------------------------------------

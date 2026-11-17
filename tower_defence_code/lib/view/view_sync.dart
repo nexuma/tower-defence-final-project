@@ -140,7 +140,9 @@ class ViewSync extends Component {
   void _drawHud(Canvas canvas) {
     final waveText = '${state.wavesStarted} / ${state.waves.length}';
     final towersText = '${state.towers.length} / ${state.maxTowers}';
-    var text = 'Lives ${state.lives}    Wave $waveText    Towers $towersText';
+    var text =
+        'Lives ${state.lives}    Score ${state.score}    '
+        'Wave $waveText    Towers $towersText';
     final message = input.lastMessage;
     if (message != null) text += '    $message';
     _hudText.render(canvas, text, Vector2(12, 8));

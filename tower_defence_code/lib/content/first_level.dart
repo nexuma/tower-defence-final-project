@@ -48,6 +48,7 @@ GameState firstLevel() => GameState(
       maxHealth: 30,
       speed: 1.2,
       radius: 0.3,
+      scoreValue: 10,
     ),
     'brute': EnemyDefinition(
       key: 'brute',
@@ -55,6 +56,7 @@ GameState firstLevel() => GameState(
       maxHealth: 90,
       speed: 0.8,
       radius: 0.4,
+      scoreValue: 50,
     ),
   },
   waves: const [

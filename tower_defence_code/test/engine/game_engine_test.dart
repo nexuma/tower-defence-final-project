@@ -20,6 +20,7 @@ const slowEnemy = EnemyDefinition(
   maxHealth: 20,
   speed: 1,
   radius: 0.3,
+  scoreValue: 10,
 );
 const arrow = ProjectileDefinition(
   key: 'arrow',

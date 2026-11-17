@@ -67,6 +67,7 @@ retired and its code is not reused; only its findings carry forward.
 | AD-16 | A wave starts when the player gives the `startNextWave` command. The spawning progress is stored in `GameState`. | Waves start automatically after a delay; spawning progress kept inside the engine. | The player has time to place towers between waves. With the progress in the model, the state is complete on its own and the view can show it. |
 | AD-17 | Data crosses into `dart_eval` as **flat lists of numbers**: 6 per tower (id, x, y, range, baseDamage, damageMultiplier), 5 per enemy (id, x, y, distanceTravelled, health), and 3 per returned shot (towerId, targetEnemyId, damage). | Lists of maps with named fields; generated bindings so the script uses `CombatTower` directly. | Numbers are what `dart_eval` passes most cheaply and need no generated code. The cost is readability: the script reads fields by position. The three options can later be compared as a measurement for Meeting 6. |
 | AD-18 | Scripts are loaded from `assets/combat_scripts/` and compiled once with `dart_eval`. `FallbackCombatLogic` switches to `NativeCombatLogic` for the rest of the game when the script throws or returns malformed data; a script that does not compile is never used. The engine's combat logic can be replaced while the game runs. | Stop the game on a script error; retry the script. | The game never breaks because of loaded code (AD-2). A replaceable logic makes loading without a restart possible. Later, downloaded scripts go into the app's documents folder (assets are read-only), and only the code that reads the text changes. |
+| AD-19 | The engine publishes **events** to **listeners** (`engine.addListener`). Listeners are called straight away, in the order things happen. `GameEvent` is a sealed class, so a `switch` must handle every kind. Telemetry and the local log will be stored as **one JSON Lines file** in the app's documents folder. | An event list in the model that consumers read and clear; Dart `Stream`s; SQLite or `shared_preferences` for storage. | Listeners are the simplest option, are easy to test, and the engine does not know who listens ("push for what is counted", AD-4). Streams deliver events after the tick, which makes ordering and tests harder. One event per line suits both FR-S2 (count placements per tower type) and FR-C2 (export in one format), and later only the new lines need uploading. |
 
 ## Folders and import rules
 
@@ -144,6 +145,7 @@ EnemyDefinition        one per kind of enemy (Type Object, AD-6)
   maxHealth            health when spawned
   speed                cells per second along the path
   radius               cells; size of the hitbox (AD-10)
+  scoreValue           points for defeating it (FR-S1)
 
 Enemy                  one per enemy on the board
   id                   incrementing integer issued by the engine
@@ -187,13 +189,13 @@ SpawnGroup             enemyKey, count, secondsBetween
 Wave                   a list of SpawnGroups, spawned in order
 
 GameState              everything about a game in progress, as plain data
-  map, lives
+  map, lives, score
   towerDefinitions, projectileDefinitions, enemyDefinitions   by key
   towers               tower ID → Tower
   towerCells           tower ID → Cell (AD-7)
   enemies              enemy ID → Enemy
   shots                PendingShots in the air
-  waves
+  waves, wavesCleared
   wavesStarted         how many waves have been started; 0 at the start
   waveInProgress       from startNextWave until spawned and cleared (AD-16)
   spawnGroupIndex, spawnedInGroup, timeUntilNextSpawn   spawning progress
@@ -206,8 +208,8 @@ never sent to `dart_eval` directly: the engine translates it into
 `CombatLogic`'s own types (AD-13).
 
 **Deliberately left out for now:** genetics and unique towers, gold and tower
-cost, inventory, upgrades, status effects (slow, poison), dodging, score
-(FR-S1), enemies costing more than one life. The design leaves room for each
+cost, inventory, upgrades, status effects (slow, poison), dodging, enemies
+costing more than one life. The design leaves room for each
 of these.
 
 ## Engine and combat logic
@@ -275,6 +277,28 @@ returns freezes the game; only running it in a separate isolate would prevent
 that. Compiling happens on the main thread, so loading a large script can
 stall a few frames.
 
+## Events and score (FR-S1)
+
+```text
+engine.addListener(listener) / removeListener(listener)
+
+GameEvent (sealed)
+  TowerPlaced          towerId, towerKey, cell
+  PlacementRejected    towerKey, cell, reason (PlacementResult)
+  WaveStarted          waveNumber (from 1)
+  WaveCleared          waveNumber
+  EnemySpawned         enemyId, enemyKey
+  EnemyDefeated        enemyId, enemyKey, towerId, scoreValue
+  EnemyReachedBase     enemyId, enemyKey, livesLeft
+  GameEnded            status, score, livesLeft, wavesCleared
+```
+
+Each `EnemyDefinition` has a `scoreValue`. When a shot defeats an enemy, the
+engine adds it to `GameState.score` and publishes `EnemyDefeated`. Enemies
+that reach the base give no points. The HUD reads the score from the model
+every frame (pull), while telemetry and the log will listen for events
+(push).
+
 ## Open architecture questions
 
 - **Engine timing.** Dart runs the engine and Flame on one thread, so a slow
@@ -291,9 +315,9 @@ stall a few frames.
 - **Downloading scripts.** Download into the documents folder in the
   background, compile in an isolate and send the bytecode back, then swap
   (AD-18).
-- **Events.** FR-S1, FR-S2 and FR-C2 need a record of what happened (enemy
-  defeated, tower placed, game ended). To decide: how does the engine publish
-  these events, and who listens?
+- **Telemetry and log export.** An "Export log" button (phones hide the
+  documents folder) and uploading new lines to a server need an anonymous
+  player ID and ethics approval (#25) before other people use the app.
 
 ## Next design steps
 
@@ -302,7 +326,8 @@ stall a few frames.
    [#12](https://github.com/nexuma/tower-defence-final-project/issues/12)).
 2. First rule: the signature and behaviour of tower placement, FR-M1
    ([#1](https://github.com/nexuma/tower-defence-final-project/issues/1)).
-3. Events and listeners (FR-S1, FR-S2, FR-C2).
+3. Events and listeners ✅ (AD-19); FR-S1 score ✅; FR-S2 telemetry and FR-C2
+   log still to do.
 4. The Flame layer: `InputHandler` and `ViewSync` ✅ (first version)
    ([#8](https://github.com/nexuma/tower-defence-final-project/issues/8),
    [#13](https://github.com/nexuma/tower-defence-final-project/issues/13)).

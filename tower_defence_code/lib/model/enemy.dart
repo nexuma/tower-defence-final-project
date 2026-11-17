@@ -6,6 +6,7 @@ class EnemyDefinition {
     required this.maxHealth,
     required this.speed,
     required this.radius,
+    required this.scoreValue,
   });
 
   /// Stable ID.
@@ -22,6 +23,9 @@ class EnemyDefinition {
 
   /// In cells: the size of the hitbox (AD-10).
   final double radius;
+
+  /// Points the player gets for defeating this enemy (FR-S1).
+  final int scoreValue;
 }
 
 /// One enemy on the board.
