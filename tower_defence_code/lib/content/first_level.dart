@@ -60,11 +60,15 @@ GameState firstLevel() => GameState(
     ),
   },
   waves: const [
-    Wave([SpawnGroup(enemyKey: 'grunt', count: 5, secondsBetween: 1.5)]),
-    Wave([SpawnGroup(enemyKey: 'grunt', count: 10, secondsBetween: 1)]),
+    Wave([SpawnGroup(enemyKey: 'grunt', count: 8, secondsBetween: 1.2)]),
     Wave([
-      SpawnGroup(enemyKey: 'grunt', count: 8, secondsBetween: 0.8),
-      SpawnGroup(enemyKey: 'brute', count: 3, secondsBetween: 2),
+      SpawnGroup(enemyKey: 'grunt', count: 14, secondsBetween: 0.8),
+      SpawnGroup(enemyKey: 'brute', count: 2, secondsBetween: 2),
     ]),
+    Wave([
+      SpawnGroup(enemyKey: 'grunt', count: 18, secondsBetween: 0.6),
+      SpawnGroup(enemyKey: 'brute', count: 6, secondsBetween: 1.5),
+    ]),
+    Wave([SpawnGroup(enemyKey: 'brute', count: 10, secondsBetween: 1)]),
   ],
 );
