@@ -1,9 +1,34 @@
 import '../combat_logic/combat_logic.dart';
 import '../combat_logic/combat_types.dart';
+import '../model/cell.dart';
 import '../model/enemy.dart';
 import '../model/game_state.dart';
 import '../model/position.dart';
 import '../model/projectile.dart';
+import '../model/tower.dart';
+
+/// The outcome of [GameEngine.placeTower]: placed, or why it was refused.
+enum PlacementResult {
+  placed,
+
+  /// The game is won or lost.
+  gameOver,
+
+  /// No tower definition has this key.
+  unknownTower,
+
+  /// The cell is not on the board.
+  outsideBoard,
+
+  /// The enemies' path runs through the cell.
+  onPath,
+
+  /// Another tower is already on the cell.
+  occupied,
+
+  /// [GameState.maxTowers] towers are already placed (FR-M1).
+  tooManyTowers,
+}
 
 /// Applies the game rules and is the only part that changes the [GameState]
 /// (AD-1, AD-2).
@@ -17,6 +42,29 @@ class GameEngine {
   final CombatLogic combatLogic;
 
   int _nextEnemyId = 1;
+  int _nextTowerId = 1;
+
+  /// Command (FR-M1): place a tower of kind [definitionKey] on [cell].
+  ///
+  /// The tower is placed only if every check passes; otherwise nothing
+  /// changes and the result says why. Towers can be placed during a wave.
+  PlacementResult placeTower(String definitionKey, Cell cell) {
+    if (state.status != GameStatus.playing) return PlacementResult.gameOver;
+    if (!state.towerDefinitions.containsKey(definitionKey)) {
+      return PlacementResult.unknownTower;
+    }
+    if (!state.map.contains(cell)) return PlacementResult.outsideBoard;
+    if (state.map.isOnPath(cell)) return PlacementResult.onPath;
+    if (state.towerCells.containsValue(cell)) return PlacementResult.occupied;
+    if (state.towers.length >= state.maxTowers) {
+      return PlacementResult.tooManyTowers;
+    }
+
+    final tower = Tower(id: _nextTowerId++, definitionKey: definitionKey);
+    state.towers[tower.id] = tower;
+    state.towerCells[tower.id] = cell;
+    return PlacementResult.placed;
+  }
 
   /// Command: start spawning the next wave.
   ///

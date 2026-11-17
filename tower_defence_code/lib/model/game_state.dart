@@ -28,6 +28,7 @@ class GameState {
     required this.projectileDefinitions,
     required this.enemyDefinitions,
     required this.waves,
+    this.maxTowers = 5,
   });
 
   final GameMap map;
@@ -39,6 +40,9 @@ class GameState {
   final Map<String, TowerDefinition> towerDefinitions;
   final Map<String, ProjectileDefinition> projectileDefinitions;
   final Map<String, EnemyDefinition> enemyDefinitions;
+
+  /// How many towers may be on the board at once (FR-M1).
+  final int maxTowers;
 
   /// Placed towers by ID.
   final Map<int, Tower> towers = {};
