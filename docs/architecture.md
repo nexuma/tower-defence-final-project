@@ -74,7 +74,8 @@ lib/
   model/           plain Dart game state
   engine/          GameEngine: rules and tick
   combat_logic/    CombatLogic interface, its own data types, implementations
-  view/            Flame: TowerDefenceGame, InputHandler, ViewSync
+  content/         level data (maps, definitions, waves) built from model types
+  view/            Flame: TowerDefenceGame, InputHandler, ViewSync, BoardLayout
 test/              mirrors lib/ (test/model/, test/engine/, ...)
 ```
 
@@ -86,6 +87,7 @@ Can the folder on the left import the folder at the top (AD-12)?
 | **engine** | yes: changes it | — | yes: interface and its data types only | no |
 | **combat_logic** | no (AD-13) | no | — | no |
 | **view** | yes: `ViewSync` reads it | yes: `InputHandler` sends commands | no | — |
+| **content** | yes: builds model data | no | no | no |
 | **main.dart** | yes | yes | yes | yes |
 
 Only `view/` and `main.dart` may import Flame. Only the sandbox
@@ -232,6 +234,24 @@ Enemies move before shots are updated and towers fire, so shots always aim at
 where an enemy is in the current tick. Tower range is measured from the
 centre of the tower's cell to the enemy's position.
 
+## View
+
+```text
+TowerDefenceGame   FlameGame; each frame calls engine.tick(min(dt, 0.1)), then draws
+BoardLayout        cells ↔ pixels: cellSize, origin, toPixels(position), cellAt(pixel)
+InputHandler       tap on a cell → engine.placeTower; "Next wave" button → engine.startNextWave;
+                   keeps the last refusal as a message for the HUD
+ViewSync           draws board, path, base, towers with range, enemies with health
+                   bars, shots and the HUD straight from the model every frame
+ControlsOverlay    Flutter "Next wave" button on top of the game
+```
+
+For now `ViewSync` draws simple shapes directly from the model instead of
+keeping one Flame component per model object, so no IDs need to be matched
+(AD-4). That changes when sprites and animations are added. A step is capped
+at 0.1 s so the game slows down after a pause rather than jumping ahead; the
+engine-timing question below is still open.
+
 ## Open architecture questions
 
 - **Engine timing.** Dart runs the engine and Flame on one thread, so a slow
@@ -257,7 +277,7 @@ centre of the tower's cell to the enemy's position.
 2. First rule: the signature and behaviour of tower placement, FR-M1
    ([#1](https://github.com/nexuma/tower-defence-final-project/issues/1)).
 3. Events and listeners (FR-S1, FR-S2, FR-C2).
-4. The Flame layer: `InputHandler` and `ViewSync`
+4. The Flame layer: `InputHandler` and `ViewSync` ✅ (first version)
    ([#8](https://github.com/nexuma/tower-defence-final-project/issues/8),
    [#13](https://github.com/nexuma/tower-defence-final-project/issues/13)).
 5. The `CombatLogic` sandbox boundary: interface and native version ✅
